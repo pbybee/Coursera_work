@@ -33,7 +33,7 @@ class HeapBuilder {
   void GenerateSwaps() {
     swaps_.clear();
     
-    for (int i = data_.size()/2; i >= 1; i--){
+    for (int i = data_.size()/2; i >= 0; i--){
         SiftDown(i);
     }
     
