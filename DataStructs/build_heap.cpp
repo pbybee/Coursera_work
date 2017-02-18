@@ -20,6 +20,10 @@ class HeapBuilder {
     for (int i = 0; i < swaps_.size(); ++i) {
       cout << swaps_[i].first << " " << swaps_[i].second << "\n";
     }
+    
+    for (int i = 0; i < data_.size(); ++i) {
+      cout << data_[i] << " ";
+    }
   }
 
   void ReadData() {
@@ -32,8 +36,9 @@ class HeapBuilder {
 
   void GenerateSwaps() {
     swaps_.clear();
+    int size = data_.size();
     
-    for (int i = data_.size()/2; i >= 0; i--){
+    for (int i = data_.size()/2; i > 0; i--){
         SiftDown(i);
     }
     
@@ -46,18 +51,24 @@ class HeapBuilder {
   }
   
 void SiftDown(int i){
-    int maxIdx = i;
-    int l = Left(i);
-    if (l <= data_.size() && data_[l] > data_[maxIdx]){
+    
+    int maxIdx;
+    int l = Left(i)-1;
+    int r = Right(i)-1;
+    i = i - 1;
+    
+    if (l < data_.size() && data_[l] < data_[i]){
         maxIdx = l;
-    }
-    int r = Right(i);
-    if (r <= data_.size() && data_[r] > data_[maxIdx]){
+    } else maxIdx = i;
+    
+    if (r < data_.size() && data_[r] < data_[maxIdx]){
         maxIdx = r;
     }
+    
     if (i != maxIdx){
+        swap(data_[i], data_[maxIdx]);
         swaps_.push_back(make_pair(i,maxIdx));
-        SiftDown(maxIdx);
+        SiftDown(maxIdx+1);
     }
 }
 
